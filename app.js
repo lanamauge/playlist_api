@@ -10,12 +10,12 @@ const pool = new Pool({
   }
 });
 
-async function queryDatabase() {
+async function queryDatabase(query) {
   try {
 	const client = await pool.connect();
 	console.log('Connected to the database');
 
-	const res = await client.query('SELECT * FROM songs');
+	const res = await client.query(query);
 	console.log(res.rows); // Print the rows returned by the query
 
 	client.release();
@@ -28,4 +28,4 @@ async function queryDatabase() {
   }
 }
 
-queryDatabase();
+queryDatabase('SELECT * FROM songs WHERE id = 2');
