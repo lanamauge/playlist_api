@@ -18,12 +18,9 @@ async function queryDatabase(query) {
   console.log("Connected to the database");
 
   const res = await client.query(query);
-  // console.log(res.rows); // Print the rows returned by the query
 
   return res.rows;
 }
-
-//queryDatabase('SELECT * FROM songs WHERE id = 2');
 
 const app = express();
 const port = 3000;
@@ -32,10 +29,6 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
 });
 
 app.get("/songs", async (req, res) => {
@@ -49,3 +42,7 @@ app.post("/songs", async (req, res) => {
 	await queryDatabase(query);
 	res.send("🎵 Song added to playlist 📲");
 })
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
