@@ -1,25 +1,8 @@
-import pkg from "pg";
-import express, { query } from "express";
+
+import express from "express";
 import "dotenv/config";
+import { queryDatabase } from "./db.js";
 
-const { Pool } = pkg;
-
-const connectionString = process.env.DB_CONNECTION_STRING;
-const pool = new Pool({
-  connectionString: connectionString,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
-
-async function queryDatabase(query) {
-  const client = await pool.connect();
-  console.log("Connected to the database");
-
-  const res = await client.query(query);
-
-  return res.rows;
-}
 
 const app = express();
 const port = 3000;
