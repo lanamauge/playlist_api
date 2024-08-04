@@ -1,11 +1,10 @@
 import pkg from "pg";
 import express, { query } from "express";
+import "dotenv/config";
 
 const { Pool } = pkg;
 
-const connectionString =
-  "postgresql://playlist_vh9f_user:3CxgBlAr9lKnwTscVsVtGFZ9KxB9yMFS@dpg-cqn32p88fa8c73aktodg-a.frankfurt-postgres.render.com/playlist_vh9f";
-
+const connectionString = process.env.DB_CONNECTION_STRING;
 const pool = new Pool({
   connectionString: connectionString,
   ssl: {
@@ -37,11 +36,11 @@ app.get("/songs", async (req, res) => {
 });
 
 app.post("/songs", async (req, res) => {
-	let song = req.body;
-	let query = `INSERT INTO songs ("title", "artist", "year") VALUES ('${song.title}', '${song.artist}', ${song.year});`
-	await queryDatabase(query);
-	res.send("🎵 Song added to playlist 📲");
-})
+  let song = req.body;
+  let query = `INSERT INTO songs ("title", "artist", "year") VALUES ('${song.title}', '${song.artist}', ${song.year});`;
+  await queryDatabase(query);
+  res.send("🎵 Song added to playlist 📲");
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
